@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 
 	int selected[picks];
 	memset(selected, 0, picks * sizeof(int));
-//	printf("Count %ld\n", sizeof(selected) / sizeof(int));
+	printf("Count %ld\n", sizeof(selected) / sizeof(int));
 	int repeat = 1;
 	if(argv[4]) {
 		repeat = atoi(argv[4]);
@@ -54,11 +54,12 @@ int main(int argc, char *argv[]) {
 	int i = 0;
 	int j = 0;
 	for(j = 0; j < repeat; j++) {
+		printf("Game %d: ", j+1);
 		for(i = 0; i < picks; i++) {
 			int selection = rand() % max + min;
 			if(duplicate(selected, picks, selection) == 0) {
 				selected[i] = selection;
-				printf("%d ",selected[i]);
+				printf("%d\t",selected[i]);
 			} else {
 				i--;
 			}

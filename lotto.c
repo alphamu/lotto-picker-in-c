@@ -25,12 +25,15 @@ int duplicate(int *selected, int size,  int number) {
 }
 
 int main(int argc, char *argv[]) {
+	//get a seed of the current time.
 	unsigned int iseed = (unsigned int)time(NULL);
+	//add seed to the random number generator
 	srand(iseed);
 	
 	if(argc < 4) die("Useage: lotto <lowest possible number> <highest possible number> <number of picks> {optional:number of games, default: 1}");
 
 	int min = atoi(argv[1]);
+	//if char did not convert to int exit.
 	if(!min) die("Min number not set");
 
 	int max = atoi(argv[2]);

@@ -5,15 +5,15 @@
 #include <string.h>
 
 void die(const char *message) {
-        if(errno) {
-                perror(message);
-        } else {
-                printf("ERROR: %s\n", message);
-        }
-        exit(1);
+		if(errno) {
+			perror(message);
+		} else {
+			printf("ERROR: %s\n", message);
+		}
+		exit(1);
 }
 
-int duplicate(int *selected, int size,  int number) {
+int duplicate(int *selected, int size,	int number) {
 	int i = 0;
 	for(i = 0; i < size; i++) {
 		//printf("Check number %d, %d = %d\n", i, selected[i], number);
@@ -30,7 +30,9 @@ int main(int argc, char *argv[]) {
 	//add seed to the random number generator
 	srand(iseed);
 	
-	if(argc < 4) die("Useage: lotto <lowest possible number> <highest possible number> <number of picks> {optional:number of games, default: 1}");
+	if(argc < 4) die("Useage: lotto.bin/powerball.bin <lowest possible number> <highest possible number> <number of picks> {optional:number of games, default: 1}");
+	
+	char *game_name = argv[0];
 
 	int min = atoi(argv[1]);
 	//if char did not convert to int exit.
@@ -44,7 +46,7 @@ int main(int argc, char *argv[]) {
 
 	int selected[picks];
 	memset(selected, 0, picks * sizeof(int));
-	printf("Count %ld\n", sizeof(selected) / sizeof(int));
+	
 	int repeat = 1;
 	if(argv[4]) {
 		repeat = atoi(argv[4]);
@@ -54,16 +56,19 @@ int main(int argc, char *argv[]) {
 	int i = 0;
 	int j = 0;
 	for(j = 0; j < repeat; j++) {
-		printf("Game %d: ", j+1);
+		printf("Game %*d: ", 4, j+1);
 		for(i = 0; i < picks; i++) {
 			int selection = rand() % max + min;
 			if(duplicate(selected, picks, selection) == 0) {
 				selected[i] = selection;
-				printf("%d\t",selected[i]);
+				printf("%*d", 4, selected[i]);
 			} else {
 				i--;
 			}
-			//printf("\n\n\n\n\n");
+		}
+		if(strcmp("./powerball.bin", game_name) == 0) {
+			int selection = rand() % max + min;
+			printf("    powerball%*d", 4, selection);
 		}
 		printf("\n");
 	}
